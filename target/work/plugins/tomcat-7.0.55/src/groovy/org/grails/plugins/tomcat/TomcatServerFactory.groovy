@@ -1,5 +1,4 @@
-/*
- * Copyright 2012 SpringSource
+/* Copyright 2004-2013 SpringSource.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,64 +12,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.grails.plugins.tomcat
-
-import grails.util.BuildSettings
-import grails.web.container.EmbeddableServer
-import grails.web.container.EmbeddableServerFactory
-import groovy.transform.CompileStatic
-
-import org.codehaus.groovy.grails.cli.support.BuildSettingsAware
-import org.grails.plugins.tomcat.fork.ForkedTomcatServer
-import org.grails.plugins.tomcat.fork.TomcatExecutionContext
-
-class TomcatServerFactory implements EmbeddableServerFactory, BuildSettingsAware {
-
-    BuildSettings buildSettings
-
-    @CompileStatic
-    EmbeddableServer createInline(String basedir, String webXml, String contextPath, ClassLoader classLoader) {
-        final obj = buildSettings?.forkSettings?.get("run")
-        if (obj) {
-            return createForked(contextPath, obj)
-        }
-
-        return new InlineExplodedTomcatServer(basedir, webXml, contextPath, classLoader)
-    }
-
-    @CompileStatic
-    private ForkedTomcatServer createForked(String contextPath, forkConfig, boolean warMode = false) {
-        final settings = buildSettings
-        TomcatExecutionContext ec = new TomcatExecutionContext()
-        final forkedTomcat = new ForkedTomcatServer(ec)
-        ec.process = forkedTomcat
-
-        ec.initialize(settings)
-        ec.contextPath = contextPath
-        ec.resourcesDir = settings.resourcesDir
-        if (warMode) {
-            ec.warPath = settings.projectWarFile.canonicalPath
-        }
-
-        if (forkConfig instanceof Map) {
-            forkedTomcat.configure((Map)forkConfig)
-        }
-
-        def tomcatJvmArgs = getTomcatJvmArgs()
-        if (tomcatJvmArgs instanceof List) {
-            forkedTomcat.jvmArgs = (List<String>)tomcatJvmArgs
-        }
-
-        return forkedTomcat
-    }
-
-    private getTomcatJvmArgs() {
-        buildSettings.config?.grails?.tomcat?.jvmArgs
-    }
-
-    EmbeddableServer createForWAR(String warPath, String contextPath) {
-        buildSettings.projectWarFile = new File(warPath)
-        final forkConfig = buildSettings?.forkSettings?.get("war") ?: buildSettings?.forkSettings?.get("run") ?: [:]
-        return createForked(contextPath, forkConfig, true)
-    }
+class TomcatGrailsPlugin {
+    def version = "7.0.55"
+    def grailsVersion = "2.3 > *"
+    def scopes = [excludes: 'war']
+    def author = "Graeme Rocher"
+    def authorEmail = "graeme.rocher@springsource.com"
+    def title = "Apache Tomcat plugin for Grails"
+    def description = 'Makes Tomcat 7.0 the default servlet container for Grails at development time.'
+    def documentation = "http://grails.org/plugin/tomcat"
+    def license = 'APACHE'
+    def organization = [name: 'Pivotal', url: 'http://www.gopivotal.com/oss']
+    def issueManagement = [system: 'JIRA', url: 'http://jira.grails.org/browse/GPTOMCAT']
+    def scm = [url: 'https://github.com/grails-plugins/grails-tomcat-plugin']
 }

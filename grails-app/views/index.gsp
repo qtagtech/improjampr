@@ -7,6 +7,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <asset:stylesheet href="application.css"/>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+        <asset:javascript src="geolocator/geolocator.js"/>
+        <script type="text/javascript">
+            //The callback function executed when the location is fetched successfully.
+            function onGeoSuccess(location) {
+                console.log(location);
+                //puede venir de dos partes, de ip o de html5, se revisa el objeto ipGeoSource ¿, si es nulo es de html5, si no, se toma data, ahi esta la ip, y los datos de ubicación quese pueden comparar
+                //con los obtenidos por html5 y asegurar así la ubicaciín de la persona
+            }
+
+            function onIpSuccess(location) {
+                console.log(location);
+                //puede venir de dos partes, de ip o de html5, se revisa el objeto ipGeoSource ¿, si es nulo es de html5, si no, se toma data, ahi esta la ip, y los datos de ubicación quese pueden comparar
+                //con los obtenidos por html5 y asegurar así la ubicaciín de la persona
+            }
+            //The callback function executed when the location could not be fetched.
+            function onGeoError(message) {
+                console.log(message);
+            }
+
+            window.onload = function() {
+                //geolocator.locateByIP(onGeoSuccess, onGeoError, 2, 'map-canvas');
+                var html5Options = { enableHighAccuracy: true, timeout: 3000, maximumAge: 0 };
+                geolocator.locate(onGeoSuccess, onGeoError, 1, html5Options, 'map-canvas');
+
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -49,11 +75,84 @@
             </div>
         </section>
          <asset:javascript src="application.js"/>
+         <asset:javascript src="fingerprint/fingerprint.js"/>
+         <asset:javascript src="detect/detect.min.js"/>
+         <asset:javascript src="cookie/jquery.cookie.js"/>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         %{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}%
         %{--<script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
         <script src="js/jquery.easytabs.min.js"></script>
         <script src="js/jquery.colorbox-min.js"></script>--}%
         <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52db4aff4182b691"></script>
+
+    <script>
+        $.cookie.raw = true;
+        var userFingerprint = new Fingerprint({screen_resolution: true,canvas: true,ie_activex: true});
+        var ua = detect.parse(navigator.userAgent);
+        var itemLocality='';
+        var itemCountry='';
+        var addressToCode = function (position) {
+            var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + "," + position.coords.longitude + "&sensor=false";
+            $.getJSON(url, function (json) {
+                if (json.status == 'OK') {
+                    //console.log(json);
+                    var arrAddress = json.results[0].address_components;
+
+                    $.each(arrAddress, function (i, address_component) {
+                        //console.log('address_component:'+i);
+
+                        if (address_component.types[0] == "route"){
+                            //console.log(i+": route:"+address_component.long_name);
+                            //itemRoute = address_component.long_name;
+                        }
+
+                        if (address_component.types[0] == "locality"){
+                            //console.log("town:"+address_component.long_name);
+                            itemLocality = address_component.long_name;
+                        }
+
+                        if (address_component.types[0] == "country"){
+                            //console.log("country:"+address_component.long_name);
+                            itemCountry = address_component.long_name;
+                        }
+
+                        if (address_component.types[0] == "postal_code_prefix"){
+                            //console.log("pc:"+address_component.long_name);
+                            //itemPc = address_component.long_name;
+                        }
+
+                        if (address_component.types[0] == "street_number"){
+                            // console.log("street_number:"+address_component.long_name);
+                            //itemSnumber = address_component.long_name;
+                        }
+
+                        if(i == (arrAddress.length - 1)) {
+                            afterPosition(true);
+                        }
+                    });
+                    //json.results[0].formatted_address;
+                } else {
+                    afterPosition(false);
+                    //alert("Geocode was not successful for the following reason: " + json.status);
+                }
+            });
+        };
+
+        function afterPosition(result){
+            console.log(itemCountry);
+            console.log(itemLocality);
+            console.log(userFingerprint.get());
+            console.log(ua.device.family);
+        };
+
+        $(document).ready(function(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(addressToCode);
+            }
+            geolocator.locateByIP(onIpSuccess, onGeoError, 1);
+            $.cookie('hasdonethevoting', 'false', { expires: 0.1, path: '/' });
+        });
+    </script>
     </body>
 </html>

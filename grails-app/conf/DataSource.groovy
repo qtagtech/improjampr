@@ -21,15 +21,21 @@ environments {
             password = "qtagtech"
         }
 
-        grails {
-            mongo {
-                host = "localhost"
-                port = 27017
-                username = ""
-                password=""
-                databaseName = "improjam"
+
+            grails {
+                mongo {
+                    /*host = "ds053380.mongolab.com"
+                    port = 53380
+                    username = "improjam"
+                    password="nickyQtag"
+                    databaseName = "improjam"*/
+                    host = "localhost"
+                    port = 27017
+                    username = ""
+                    password=""
+                    databaseName = "improjam"
+                }
             }
-        }
 
     }
 

@@ -88,11 +88,11 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
-        com.nest5.BusinessData.database = "improjam"
+        com.improjam.database = "improjam"
     }
     production {
         grails.logging.jul.usebridge = false
-        com.nest5.BusinessData.database = ""
+        com.improjam.database = "improjam"
 
     }
 }
@@ -118,6 +118,19 @@ log4j.main = {
            'net.sf.ehcache.hibernate'
 }
 
+grails {
+    mail {
+        host = "smtp.gmail.com"
+        port = 465
+        username = "contacto@qtagtech.com"
+        password = "farroyavefami"
+        props = ["mail.smtp.auth":"true",
+                 "mail.smtp.socketFactory.port":"465",
+                 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                 "mail.smtp.socketFactory.fallback":"false"]
+    }
+}
+
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.improjam.SecUser'
@@ -131,7 +144,17 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/js/**':                      ['permitAll'],
 	'/**/css/**':                     ['permitAll'],
 	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll']
+	'/**/favicon.ico':                ['permitAll'],
+    '/test/**':                       ['permitAll'],
+    '/user/**':                       ['ROLE_ADMIN'],
+    '/user/**':                       ['ROLE_ADMIN'],
+    '/role/**':                       ['ROLE_ADMIN'],
+    '/securityInfo/**':               ['ROLE_ADMIN'],
+    '/registrationCode/**':           ['ROLE_ADMIN'],
+    '/admin/**':                      ['ROLE_ADMIN'],
+    '/plugins/**':                    ['permitAll'],
+    '/register/**':                   ['ROLE_ADMIN'],
+    '/vote/**':                       ['permitAll']
 ]
 
 
@@ -139,3 +162,5 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 grails.plugin.springsecurity.facebook.domain.classname='com.improjam.FacebookUser'
 grails.plugin.springsecurity.facebook.appId='1008044385879083'
 grails.plugin.springsecurity.facebook.secret='a4e45e862d176d6be744cbf6198526a6'
+
+app.timezone = "America/Bogota"
