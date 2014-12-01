@@ -23,7 +23,7 @@
     </section>
 </header>
 <section>
-    <g:if test="${videos?.size() != 5}">
+    <g:if test="${videos?.size() != 4}">
         <div class="home_description">
             <h1>Aún no se han registrado todos los videos participantes. Deben ser 16 para realizar las batallas.</h1>
             <button type="button" id="registerVideos">Haz clic Aquí Para Registrar Videos</button>
@@ -31,6 +31,7 @@
     </g:if>
     <g:else>
         <div id="tab-container" class="tab-container">
+            <g:remoteLink class="logout" controller="logout" method="post" asynchronous="false" onSuccess="location.reload()">Logout</g:remoteLink>
             <ul class="tabs">
                 <li class="tab"><a href="#ronda-1">1° Ronda</a></li>
                 <li class="tab"><a href="#ronda-2">2° Ronda</a></li>

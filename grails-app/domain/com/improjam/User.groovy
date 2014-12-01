@@ -2,6 +2,8 @@ package com.improjam
 
 class User extends SecUser {
 
+    static hasMany = [ytAccessTokens: YoutubeAuthToken,twAccessTokens: TwitterAuthToken]
+
     String name
     String email
     String telephone
@@ -13,6 +15,7 @@ class User extends SecUser {
     String country
     BigInteger uid = 0
     String accessToken = ""
+    String ytRefreshToken = ""
 
 
     static constraints = {

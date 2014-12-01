@@ -224,7 +224,7 @@ class AdminController {
             }
             else //Es un rango de fechas
             {
-                println "en rango de fechas"
+                //println "en rango de fechas"
                 assert values.size() == 2
                 def fecha1 = values[0].split('/')
                 def fecha2 = values[1].split('/')
@@ -289,8 +289,8 @@ class AdminController {
                 start.set(year: fecha1[2].toInteger(), month: month1, date: fecha1[1].toInteger(), hourOfDay: 0, minute: 0,second: 0,millisecond: 0)
                 def end = Calendar.getInstance(TimeZone.getTimeZone(grailsApplication.config.app.timezone))
                 end.set(year: fecha2[2].toInteger(), month: month2, date: fecha2[1].toInteger() + 1, hourOfDay: 0, minute: 0,second: 0,millisecond: 0)
-                println start
-                println end
+                //println start
+                //println end
                 startDate = start.getTime()
                 endDate = end.getTime()
             }
@@ -303,9 +303,9 @@ class AdminController {
         endDate = sdf.format(endDate)
         startDate = new Date().parse('MM/dd/yyyy HH:mm:ss',startDate)
         endDate = new Date().parse('MM/dd/yyyy HH:mm:ss',endDate)
-        println "fechas"
-        println startDate
-        println endDate
+        //println "fechas"
+//        println startDate
+//        println endDate
         DateTime sDt = new DateTime(startDate)
         DateTime eDt = new DateTime(endDate)
         def res = [startDate: startDate,endDate:endDate]

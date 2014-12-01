@@ -11,8 +11,8 @@ class BootStrap {
         def contestantRole = SecRole.findByAuthority('ROLE_CONTESTANT') ?: new SecRole(authority: 'ROLE_CONTESTANT').save(failOnError: true)
 
 
-        def adminUser = User.findByUsername('juanda6') ?: new User(
-                username: 'juanda6',
+        def adminUser = User.findByUsername('juanda6_admin') ?: new User(
+                username: 'juanda6_admin',
                 password: 'farroyavefami',
                 enabled: true,
                 name : 'Juan David Arroyave Henao',

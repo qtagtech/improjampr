@@ -21,6 +21,15 @@ $(document).ready(function(){
 			$( "#ronda1start" ).datepicker( "option", "maxDate", selectedDate );
 		}
 	});
+	$("body").on("click",".play_competitor_on",function(e){
+		var url = "//www.youtube.com/embed/"+$(this).closest(".play_competitor").data("video-id");
+		var title = $(this).closest(".play_competitor").data('video-title');
+		var artist = $(this).closest(".play_competitor").data('video-artist');
+		$("#videoframe").attr("src",url);
+		$("#textoartista").html(artist);
+		$("#textocancion").html(title);
+	});
+
 });
 
 
@@ -29,9 +38,4 @@ $('.competitor').hover(function () {
   	$(this).children(".vote_competitor").toggleClass("vote_competitor_on");
   	$(this).children(".play_competitor").toggleClass("play_competitor_on");
 	$(".play_competitor_on").colorbox({inline:true, width:"70%"});
-	$('.vote_competitor_on').click(function () {
-			$(this).parent(".competitor").addClass("competitor_vote");
-			$(this).siblings(".my_vote").addClass("my_vote_on");
-			$(this).parent(".competitor").siblings(".competitor").addClass("competitor_not_vote");
-	});
 });

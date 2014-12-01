@@ -145,7 +145,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/css/**':                     ['permitAll'],
 	'/**/images/**':                  ['permitAll'],
 	'/**/favicon.ico':                ['permitAll'],
-    '/test/**':                       ['permitAll'],
+    '/authorize/**':                  ['permitAll'],
     '/user/**':                       ['ROLE_ADMIN'],
     '/user/**':                       ['ROLE_ADMIN'],
     '/role/**':                       ['ROLE_ADMIN'],
@@ -162,5 +162,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 grails.plugin.springsecurity.facebook.domain.classname='com.improjam.FacebookUser'
 grails.plugin.springsecurity.facebook.appId='1008044385879083'
 grails.plugin.springsecurity.facebook.secret='a4e45e862d176d6be744cbf6198526a6'
+grails.plugin.springsecurity.facebook.permissions = 'email,user_likes'
+com.improjam.url = 'http://hookthemapp.localhost.com:8080/ImproJam'
+com.improjam.youtube.clientid = '296893071437-ke0ke7bc6jaf4lv0o579bde5f9ipkrvk.apps.googleusercontent.com'
+com.improjam.youtube.channelid = 'UCpb_iJuhFe8V6rQdbNqfAlQ'
+com.improjam.youtube.clientsecret = 'md7ZchRu95rpf3IM8jzkaVi7'
+com.improjam.youtube.redirecturi = 'http://hookthemapp.localhost.com:8080/ImproJam/authorize/youtube'
+com.improjam.twitter.consumerkey = 'AVtHnJzpGyQTuQAKzuVzezilo'
+com.improjam.twitter.consumersecret = 'lHj4Tnh13RwwAZZKJyUI4AGnrAGXkRACy7tpqTStNBHegUswGQ'
+com.improjam.twitter.redirecturi = 'http://hookthemapp.localhost.com:8080/improJam'
+com.improjam.instagram.clientid = 'd9d6427b202344648dc57848cac70645'
+com.improjam.instagram.clientsecret = '5a3c70e44dee48b88a65e597b7cf3b6b'
+com.improjam.instagram.redirecturi = 'http://hookthemapp.localhost.com:8080/ImproJam/authorize/instagram'
+com.improjam.instagram.nickyjamid = '55795588'
+
 
 app.timezone = "America/Bogota"

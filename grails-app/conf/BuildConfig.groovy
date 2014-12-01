@@ -60,6 +60,7 @@ grails.project.dependency.resolution = {
         compile 'commons-logging:commons-logging:1.2'
         compile 'org.grails:grails-datastore-gorm:3.1.3.RELEASE'
         compile 'org.grails:grails-datastore-core:3.1.3.RELEASE'
+        compile 'org.twitter4j:twitter4j-core:jar:4.0.2'
         test 'org.grails:grails-datastore-simple:3.1.3.RELEASE'
         compile('org.codehaus.groovy.modules.http-builder:http-builder:0.6') {
             excludes "commons-logging", "xml-apis", "groovy","httpclient","httpcore"

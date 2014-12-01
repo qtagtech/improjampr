@@ -24,16 +24,16 @@ environments {
 
             grails {
                 mongo {
-                    /*host = "ds053380.mongolab.com"
-                    port = 53380
+                    host = "ds061170-a0.mongolab.com"
+                    port = 61170
                     username = "improjam"
                     password="nickyQtag"
-                    databaseName = "improjam"*/
-                    host = "localhost"
+                    databaseName = "improjam"
+                    /*host = "localhost"
                     port = 27017
                     username = ""
                     password=""
-                    databaseName = "improjam"
+                    databaseName = "improjam"*/
                 }
             }
 
@@ -42,11 +42,11 @@ environments {
     production {
         grails {
             mongo {
-                host = System.env.OPENSHIFT_MONGODB_DB_HOST
-                port = System.env.OPENSHIFT_MONGODB_DB_PORT
-                username = "admin"
-                password=""
-                databaseName = ""
+                host = "ds061170-a0.mongolab.com"
+                port = 61170
+                username = "improjam"
+                password="nickyQtag"
+                databaseName = "improjam"
             }
         }
         dataSource_trans {
