@@ -119,7 +119,7 @@
         <sec:ifAnyGranted roles="ROLE_USER,ROLE_CONTESTANT,ROLE_ADMIN">
             <section>
                 <div class="home_description contest">
-                    Bienvenido <strong>${currentUser?.username}</strong>. Puedes ver los videos participantes, pero antes de votar, debes cumplir ciertos requisitos:
+                    Bienvenido <strong>${currentUser?.name}</strong>. Vota por tus videos favoritos. Máximo podrás hacerlo una vez por día. Si Autorizas tus redes sociales ayudarás a tu video favorito a ganar haciéndolo más popular. ¡Anímate!:
                     <ul id="alert_login">
                         <li class="facebook">
                             <div class="fb-like" data-href="https://www.facebook.com/NickyJamPR" data-layout="box_count" data-action="like" data-show-faces="true" data-share="false" data-colorscheme="dark"></div> <span class="company_text icon-facebook">Únete a los más de 7 millones de seguidores en Facebook de <strong>NickyJamPR</strong> para tener contacto constante y ser uno más de sus amigos.</span>
@@ -268,22 +268,23 @@
                 </div>
             </div>
         </div>
+
     <asset:javascript src="application.js"/>
     <asset:javascript src="fingerprint/fingerprint.js"/>
     <asset:javascript src="detect/detect.min.js"/>
     <asset:javascript src="cookie/jquery.cookie.js"/>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    %{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>--}%
+
     %{--<script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <script src="js/jquery.easytabs.min.js"></script>
     <script src="js/jquery.colorbox-min.js"></script>--}%
     <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52db4aff4182b691"></script>
     <script>
-        var likesFB = false;
-        var likesYT = false;
-        var likesTW = false;
-        var likesIN = false;
+        var likesFB = true;
+        var likesYT = true;
+        var likesTW = true;
+        var likesIN = true;
 
         //revisar youtube en caso que si
         <g:if test="${youtube?.subscribed == 1}">

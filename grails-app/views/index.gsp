@@ -74,6 +74,7 @@
                 </ul>
             </div>
         </section>
+
          <asset:javascript src="application.js"/>
          <asset:javascript src="fingerprint/fingerprint.js"/>
          <asset:javascript src="detect/detect.min.js"/>

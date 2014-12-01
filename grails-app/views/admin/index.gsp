@@ -23,7 +23,7 @@
     </section>
 </header>
 <section>
-    <g:if test="${videos?.size() != 4}">
+    <g:if test="${videos?.size() != 16}">
         <div class="home_description">
             <h1>Aún no se han registrado todos los videos participantes. Deben ser 16 para realizar las batallas.</h1>
             <button type="button" id="registerVideos">Haz clic Aquí Para Registrar Videos</button>
@@ -186,6 +186,7 @@
     </g:else>
 
 </section>
+
 <asset:javascript src="application.js"/>
 <asset:javascript src="easytabs/jquery.easytabs.js"/>
 

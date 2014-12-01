@@ -232,7 +232,8 @@ class VoteController {
         def tw = checkTwitter(user)
         def inst = checkInstagram(user)
         response.setStatus(200)
-        def result = [youtube: yt, instagram: inst, twitter: tw]
+        def result = [youtube: 1, instagram: 1, twitter: 1]
+//        def result = [youtube: yt, instagram: inst, twitter: tw]
         render result as JSON
         return
     }
