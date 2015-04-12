@@ -1,0 +1,139 @@
+h1.title_battle {
+	color: #000;
+	background: #fff;
+	padding: 10px 0;
+	margin: 30px 0 0;
+	float: left;
+	width: 100%;
+}
+.subtitle {
+	color: #ff0101;
+}
+.battle_conclucion {
+	float: left;
+	width: 50% !important;
+	position: relative;
+	margin: 0 0 0;
+}
+section#battles_finish {
+	position: relative;
+	float: left;
+}
+h2.vs {
+	width: 100px;
+	height: 100px;
+	background: #fff;
+	color: #000;
+	border-radius: 100px;
+	position: absolute;
+	font-size: 72px;
+	left: 0;
+	right: 0;
+	margin: 135px auto;
+	z-index: 1;
+}
+.battle_conclucion img {
+	width: 100%;
+}
+.battle_conclucion h5 {
+	position: absolute;
+	color: #fff;
+	opacity: 0.7;
+	width: 100% !important;
+	text-align: center;
+	top: 80px;
+	font-size: 50px;
+}
+.loser img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	opacity: 0.6;
+}
+.credits_users {
+	position: absolute;
+	width: 90%;
+	padding: 10px 5%;
+	z-index: 1;
+	background: #000;
+}
+.credits_users span {
+	color: #ff0101;
+	font-weight: bold;
+}
+#soon_image img {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+}
+.votos_users {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+	font-size: 17px;
+	font-weight: bold;
+	z-index: 1;
+	background: #000;
+	padding: 10px 0;
+}
+.votos_users i {
+	color: #ff0101;
+}
+.more_votos {
+	position: absolute;
+	bottom: 130px;
+	width: 100%;
+	z-index: 9;
+}
+.more_votos h3 {
+	margin: 0 0 5px;
+}
+@media screen and (max-width: 1100px) {
+	h2.vs {
+		width: 60px;
+		height: 60px;
+		font-size: 40px;
+		margin: 100px auto;
+	}
+	.more_votos {
+		bottom: 89px;
+	}
+	.battle_conclucion h5 {
+		top: 58px;
+		font-size: 40px;
+	}
+}
+@media screen and (max-width: 800px) {
+	h2.vs {
+		width: 40px;
+		height: 40px;
+		font-size: 30px;
+		margin: 90px auto;
+	}
+	.more_votos {
+		bottom: 68px;
+	}
+	.battle_conclucion h5 {
+		font-size: 30px;
+		top: 55px;
+	}
+}
+@media screen and (max-width: 650px) {
+	.battle_conclucion {
+		width: 100% !important;
+	}
+	h2.vs {
+		display: none;
+	}
+	.more_votos {
+		display: none;
+	}
+	.battle_conclucion h5 {
+		font-size: 50px;
+	}
+}
+@media screen and (max-width: 450px) {
+	.battle_conclucion h5 {
+		font-size: 30px;
+	}
+}

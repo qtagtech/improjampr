@@ -78,3 +78,15 @@ body.loading {
 body.loading .modal {
     display: block;
 }
+
+@media screen and (min-width: 640px) {
+    #alert_login{
+        width: 100% !important;
+    }
+    
+    #alert_login li{
+        display: inline-block !important;
+        width: 25% !important;
+        text-align: center;
+    }
+}

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ImproJam.iml" filepath="$PROJECT_DIR$/ImproJam.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ImproJam-grailsPlugins.iml" filepath="$PROJECT_DIR$/ImproJam-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/improjam.iml" filepath="$PROJECT_DIR$/improjam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/improjam-grailsPlugins.iml" filepath="$PROJECT_DIR$/improjam-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
+

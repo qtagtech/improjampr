@@ -12,6 +12,7 @@ import twitter4j.TwitterFactory
 import twitter4j.auth.AccessToken
 import twitter4j.conf.Configuration
 import twitter4j.conf.ConfigurationBuilder
+import groovy.time.TimeCategory
 
 import java.text.SimpleDateFormat
 
@@ -24,7 +25,7 @@ class VoteController {
 
     def index() {
         def db = mongo.getDB(grailsApplication.config.com.improjam.database)
-        BasicDBObject query = new BasicDBObject().append("round",1)
+        BasicDBObject query = new BasicDBObject().append("round",2)
         def results = db.fixtures.find(query)
         def ronda1 = false
         def ronda2 = false
@@ -36,12 +37,12 @@ class VoteController {
             //ronda1 = true
             def obj = results?.next()
             def today  =  new Date()
-            fechas1['startDate'] = obj?.initDate
-            fechas1['endDate'] = obj?.endDate
+            fechas2['startDate'] = obj?.initDate
+            fechas2['endDate'] = obj?.endDate
             if(obj?.initDate <= today && today <= obj?.endDate)
-                ronda1 = true
+                ronda2 = true
         }
-        BasicDBObject queryf = new BasicDBObject().append("round",1)
+        BasicDBObject queryf = new BasicDBObject().append("round",2)
         def fixturesfirst = db.fixtures.find(queryf)
         def videoList = []
         while(fixturesfirst.hasNext()){
@@ -80,7 +81,14 @@ class VoteController {
                 reauthorizeUser(curUser)
                 subYoutube = checkYoutube(curUser)
         }
-        [currentUser: curUser,youtube: [token: ytAT,subscribed:subYoutube],twitter:[token: twAT,follows: folTwitter],instagram:[token: inAT,follows: folInstagram], facebookUser: fbUser,ronda1:ronda1,ronda2:ronda2,ronda3:ronda3,fechas1:fechas1,fechas2:fechas2,fechas3:fechas3,videos: videoList]
+        def today = new Date()
+        def tomorrow
+        use( TimeCategory ) {
+            tomorrow = today + 1.day
+        }
+        Date initDate = fechas2.startDate ? fechas2.startDate as Date : tomorrow
+        def showVideos = today >= initDate
+        [currentUser: curUser,showVideos : showVideos,youtube: [token: ytAT,subscribed:subYoutube],twitter:[token: twAT,follows: folTwitter],instagram:[token: inAT,follows: folInstagram], facebookUser: fbUser,ronda1:ronda1,ronda2:ronda2,ronda3:ronda3,fechas1:fechas1,fechas2:fechas2,fechas3:fechas3,videos: videoList]
     }
 
     def vote(){

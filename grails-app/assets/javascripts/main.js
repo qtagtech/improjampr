@@ -3,17 +3,19 @@ $(document).ready(function(){
     	$(".rapper-1").addClass("rapper-1-on");
     	$(".rapper-2").addClass("rapper-2-on");
 	}, 2000);
-	$('#tab-container').easytabs();
+	$('#tab-container').easytabs({
+        defaultTab: "li#the-second-round"
+    });
 	$("#ronda2, #ronda3, #ronda4" ).datepicker();
-	$( "#ronda1start" ).datepicker({
+	$( "#ronda2start" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: true,
 		numberOfMonths: 1,
 		onClose: function( selectedDate ) {
-			$( "#ronda1end" ).datepicker( "option", "minDate", selectedDate );
+			$( "#ronda2end" ).datepicker( "option", "minDate", selectedDate );
 		}
 	});
-	$( "#ronda1end" ).datepicker({
+	$( "#ronda2end" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: true,
 		numberOfMonths: 1,

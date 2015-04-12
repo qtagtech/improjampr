@@ -23,7 +23,7 @@ class AdminController {
             }
 
         }
-        BasicDBObject query = new BasicDBObject().append("round",1)
+        BasicDBObject query = new BasicDBObject().append("round",2)
         def results = db.fixtures.find(query)
         def ronda1 = false
         def ronda2 = false
@@ -33,12 +33,12 @@ class AdminController {
         def fechas3 = [:]
         DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
         if(results){
-            ronda1 = true
+            ronda2 = true
             def obj = results?.next()
             //def initDate = obj?.initDate ? dtf.parseDateTime(obj.initDate).toDate() : new Date()
             //def endDate = obj?.endDate ? dtf.parseDateTime(obj.endDate).toDate() : new Date()
-            fechas1['startDate'] = obj?.initDate
-            fechas1['endDate'] = obj?.endDate
+            fechas2['startDate'] = obj?.initDate
+            fechas2['endDate'] = obj?.endDate
         }
 
         [videos:videoList, ronda1: ronda1, ronda2: ronda2, ronda3: ronda3,fechas1:fechas1,fechas2:fechas2,fechas3:fechas3]
@@ -56,14 +56,14 @@ class AdminController {
             def vid6 = params.ronda1_video_5
             def vid7 = params.ronda1_video_6
             def vid8 = params.ronda1_video_7
-            def vid9 = params.ronda1_video_8
+            /*def vid9 = params.ronda1_video_8
             def vid10 = params.ronda1_video_9
             def vid11 = params.ronda1_video_10
             def vid12 = params.ronda1_video_1
             def vid13 = params.ronda1_video_12
             def vid14 = params.ronda1_video_13
             def vid15 = params.ronda1_video_14
-            def vid16 = params.ronda1_video_15
+            def vid16 = params.ronda1_video_15*/
             /*if(!!vid1 == false || !!vid2 == false || !!vid3 == false || !!vid4 == false || !!vid5 == false || !!vid6 == false || !!vid7 == false ||
                     !!vid8 == false || !!vid9 == false || !!vid10 == false || !!vid11 == false || !!vid12 == false || !!vid13 == false || !!vid14 == false || !!vid15 == false){
                 response.setStatus(200)
@@ -79,20 +79,20 @@ class AdminController {
             vids.add(vid6)
             vids.add(vid7)
             vids.add(vid8)
-            vids.add(vid9)
+            /*vids.add(vid9)
             vids.add(vid10)
             vids.add(vid11)
             vids.add(vid12)
             vids.add(vid13)
             vids.add(vid14)
             vids.add(vid15)
-            vids.add(vid16)
+            vids.add(vid16)*/
             def db = mongo.getDB(grailsApplication.config.com.improjam.database)
-            BasicDBObject query = new BasicDBObject().append("round",1)
+            BasicDBObject query = new BasicDBObject().append("round",2)
             def results = db.fixtures.find(query)
             if(results){
                 response.setStatus(200)
-                def result = ["status": 0, "message": "ATENCIÓN: La Ronda 1 ya había sido configurada y guardada con anterioridad."]
+                def result = ["status": 0, "message": "ATENCIÓN: La Ronda 2 ya había sido configurada y guardada con anterioridad."]
                 render result as JSON
                 return
             }
@@ -101,9 +101,9 @@ class AdminController {
             DateTime endDate = formatter.parseDateTime(params.endDate as String)
             def i = 0
 
-            while(i < 15) {
+            while(i < 7) {
                 BasicDBObject fixtt = new BasicDBObject().append("video_1", vids.get(i))
-                        .append("round",1)
+                        .append("round",2)
                         .append("video_2", vids.get(i + 1))
                         .append("dateCreated", new Date())
                         .append("lastUpdated", new Date())
@@ -115,7 +115,7 @@ class AdminController {
 
         }
         response.setStatus(200)
-        def result = ["status": 1, "message": "¡ÉXITO!: Ronda 1 Configurada satisfactoriamente."]
+        def result = ["status": 1, "message": "¡ÉXITO!: Ronda 2 Configurada satisfactoriamente."]
         render result as JSON
         return
     }

@@ -23,9 +23,9 @@
     </section>
 </header>
 <section>
-    <g:if test="${videos?.size() != 16}">
+    <g:if test="${videos?.size() != 8}">
         <div class="home_description">
-            <h1>Aún no se han registrado todos los videos participantes. Deben ser 16 para realizar las batallas.</h1>
+            <h1>Aún no se han registrado todos los videos participantes. Deben ser 8 para realizar las batallas de segunda ronda.</h1>
             <button type="button" id="registerVideos">Haz clic Aquí Para Registrar Videos</button>
         </div>
     </g:if>
@@ -34,23 +34,26 @@
             <g:remoteLink class="logout" controller="logout" method="post" asynchronous="false" onSuccess="location.reload()">Logout</g:remoteLink>
             <ul class="tabs">
                 <li class="tab"><a href="#ronda-1">1° Ronda</a></li>
-                <li class="tab"><a href="#ronda-2">2° Ronda</a></li>
+                <li class="tab" id="the-second-round"><a href="#ronda-2">2° Ronda</a></li>
                 <li class="tab"><a href="#ronda-3">3° Ronda</a></li>
+                %{--<li class="tab"><a href="#ronda-3">3° Ronda</a></li>--}%
                 <li class="tab"><a href="#final">Final</a></li>
             </ul>
             <div id="ronda-1" class="cont-tab">
+            </div>
+            <div id="ronda-2" class="cont-tab">
                 <div class="timedate">
-                    <span><strong>1° Ronda</strong></span>
-                    <g:if test="${ronda1 == false}">
-                    <input type="text" id="ronda1start" placeholder="Fecha de inicio de la ronda">
-                    <input type="text" id="ronda1end" placeholder="Fecha de cierre de la ronda">
+                    <span><strong>2° Ronda</strong></span>
+                    <g:if test="${ronda2 == false}">
+                    <input type="text" id="ronda2start" placeholder="Fecha de inicio de la ronda">
+                    <input type="text" id="ronda2end" placeholder="Fecha de cierre de la ronda">
                     </g:if>
                     <g:else>
-                        <g:formatDate date="${fechas1?.startDate}" type="date" style="LONG" locale="es_CO"/> - <g:formatDate date="${fechas1?.endDate}" type="date" style="LONG" locale="es_CO"/>
+                        <g:formatDate date="${fechas2?.startDate}" type="date" style="LONG" locale="es_CO"/> - <g:formatDate date="${fechas2?.endDate}" type="date" style="LONG" locale="es_CO"/>
                     </g:else>
                 </div>
                 <% def j = 0 %>
-                <g:while test="${j < 16}">
+                <g:while test="${j < 8}">
                     <article class="article_admin" id="round1">
                         <div class="battle">
                             <input type="text" placeholder="URL del video" value="${videos[j]?.video?.url}" disabled>
@@ -69,68 +72,11 @@
                     <% j = j + 2 %>
                 </g:while>
                 <article class="article_admin">
-                    <button type="button" id="generateRound1" <g:if test="${!!ronda1 != false}" >disabled="disabled" </g:if>>Iniciar Ronda</button>
+                    <button type="button" id="generateRound2" <g:if test="${!!ronda2 != false}" >disabled="disabled" </g:if>>Iniciar Ronda</button>
                 </article>
                 <br/>
             </div>
-            <div id="ronda-2" class="cont-tab">
-                <div class="timedate">
-                    <span><strong>2° Ronda</strong></span>
-                    <input type="text" id="ronda2" placeholder="Fecha del cierre de la ronda">
-                </div>
-                <article class="article_admin">
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                    <span class="versus_admin">VS</span>
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                </article>
-                <article class="article_admin">
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                    <span class="versus_admin">VS</span>
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                </article>
-                <article class="article_admin">
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                    <span class="versus_admin">VS</span>
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                </article>
-                <article class="article_admin">
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                    <span class="versus_admin">VS</span>
-                    <div class="battle">
-                        <input type="text" placeholder="URL del video">
-                        <input type="text" class="name_author" placeholder="Nombre del Autor">
-                        <input type="text" class="name_song" placeholder="Nombre de la canción">
-                    </div>
-                </article>
-            </div>
+
             <div id="ronda-3" class="cont-tab">
                 <div class="timedate">
                     <span><strong>3° Ronda</strong></span>
@@ -202,9 +148,9 @@
                 window.location.origin = window.location.protocol+"//"+window.location.host;
             window.location = window.location.origin + "${createLink(controller: 'register',action: 'index')}";
         });
-        $("body").on("click","#generateRound1",function(e){
-            var date1 = $("#ronda1start").val();
-            var date2 = $("#ronda1end").val();
+        $("body").on("click","#generateRound2",function(e){
+            var date1 = $("#ronda2start").val();
+            var date2 = $("#ronda2end").val();
             if(!!date1 == false || !!date2 == false){
                 var notification = new NotificationFx({
                     message : '<span class="icon icon-megaphone"></span><p>ERROR: No especificaste alguna de las fechas de incio o de final de la ronda.</p>',
@@ -226,7 +172,7 @@
             saveFixtures(data).done(function(response){
                 $body.removeClass("loading");
                 if(response.status == 1){
-                    $("#generateRound1").attr("disabled","disabled");
+                    $("#generateRound2").attr("disabled","disabled");
                     var notification = new NotificationFx({
                         message : '<span class="icon icon-megaphone"></span><p>'+response.message+'</p>',
                         layout : 'bar',

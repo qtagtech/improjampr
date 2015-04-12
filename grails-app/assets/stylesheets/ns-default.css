@@ -64,7 +64,64 @@
 	left: 50%;
 	background: #6e6e6e;
 }
-
+.cont-tab article .data_battle .vote_all {
+    margin:0px !important; ;
+}
+.cont-tab article .competitor img {
+    height: 300px;
+}
+@media screen and (max-width: 1100px) {
+.cont-tab article .competitor img {
+        height: 240px;
+}}
+@media screen and (max-width: 800px) {
+    .cont-tab article .competitor img {
+        height: 190px;
+    }
+ }
+@media screen and (max-width: 650px) {
+    .cont-tab article .competitor img {
+        height: 240px;
+    }
+    .cont-tab article .data_battle .data_battle_1{
+        margin: -502px 0 0 0;
+        text-align: center;
+    }
+    .cont-tab article .data_battle .data_battle_2{
+        margin: -1px 0 0 0;
+        text-align: center;
+    }
+    .wrapper {
+        display: none !important;
+    }
+    #alert_login li {
+        width: 100% !important;
+    }
+    .cont-tab article {
+        border-bottom: 5px solid #fff;
+        margin: 35px 0;
+        padding: 0 0 100px;
+    }
+}
+@media screen and (max-width: 450px) {
+    .cont-tab article .competitor img {
+        height: 160px;
+    }
+    .cont-tab article .competitor {
+        margin:0 !important;
+    }
+    .cont-tab article .versus {
+        margin: 135px auto 0;
+        display: block !important;
+    }
+    .cont-tab article {
+        margin: 55px 0 20px;
+        padding: 0 0 100px;
+    }
+    .cont-tab article .data_battle .data_battle_1{
+        margin: -367px 0 0 0;
+    }
+}
 .ns-close:hover::before,
 .ns-close:hover::after {
 	background: #fff;

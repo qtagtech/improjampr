@@ -8,6 +8,7 @@
         <asset:stylesheet href="application.css"/>
         <asset:stylesheet href="notification.css"/>
         <asset:javascript src="modernizr/modernizr.custom.js"/>
+        <asset:stylesheet href="css-ganador.css"/>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
         <asset:javascript src="geolocator/geolocator.js"/>
         <script src="https://apis.google.com/js/platform.js"></script>
@@ -103,6 +104,7 @@
                 
             </section>
         </header>
+    <g:if test="${showVideos}">
         <sec:ifNotLoggedIn>
             <section>
                 <div class="home_description">
@@ -116,143 +118,466 @@
                 </div>
             </section>
         </sec:ifNotLoggedIn>
-        <sec:ifAnyGranted roles="ROLE_USER,ROLE_CONTESTANT,ROLE_ADMIN">
-            <section>
-                <div class="home_description contest">
-                    Bienvenido <strong>${currentUser?.name}</strong>. Vota por tus videos favoritos. Máximo podrás hacerlo una vez por día. Si Autorizas tus redes sociales ayudarás a tu video favorito a ganar haciéndolo más popular. ¡Anímate!:
-                    <ul id="alert_login">
-                        <li class="facebook">
-                            <div class="fb-like" data-href="https://www.facebook.com/NickyJamPR" data-layout="box_count" data-action="like" data-show-faces="true" data-share="false" data-colorscheme="dark"></div> <span class="company_text icon-facebook">Únete a los más de 7 millones de seguidores en Facebook de <strong>NickyJamPR</strong> para tener contacto constante y ser uno más de sus amigos.</span>
-                        </li>
+    <sec:ifAnyGranted roles="ROLE_USER,ROLE_CONTESTANT,ROLE_ADMIN">
+    <section>
+        <div class="home_description contest">
+            Bienvenido <strong>${currentUser?.name}</strong>. Vota por tus videos favoritos. Máximo podrás hacerlo una vez por día. Recuerda que debes ser fan de Nickyjam en Facebook para poder votar.
+            <ul id="alert_login">
+                <li class="facebook">
+                    <div class="fb-like" data-href="https://www.facebook.com/NickyJamPR" data-layout="box_count" data-action="like" data-show-faces="true" data-share="false" data-colorscheme="dark"></div>
+                </li>
 
-                        <g:if test="${!!youtube?.token == false}">
-                            <li class="youtube">
-                                <button type="button" id="authYoutube"><i class="icon-youtube"></i>Ir a Youtube</button> <span class="company_text icon-youtube">Autoriza tu cuenta para así seguir los mejores videos de <strong>NickyJamTV</strong> y se el primero en enterarte de lo más nuevo en música, improvisaciones, live events, comunicados y noticias.</span>
-                            </li>
-                        </g:if>
-                    <g:else>
-                        <g:if test="${youtube?.subscribed == 0}">
-                            <li class="youtube">
-                                <div class="g-ytsubscribe" data-channelid="UCpb_iJuhFe8V6rQdbNqfAlQ" data-layout="full" data-theme="dark" data-count="undefined"></div> <span class="company_text icon-youtube">Debes seguir el canal de <strong>NickyJamTV</strong> en Youtube</span>
-                            </li>
-                        </g:if>
-                    </g:else>
-                    <g:if test="${!!twitter?.token == false}">
+                <g:if test="${!!youtube?.token == false}">
+                    <li class="youtube">
+                        <button type="button" id="authYoutube"><i class="icon-youtube"></i>Ir a Youtube</button>
+                    </li>
+                </g:if>
+                <g:else>
+                    <g:if test="${youtube?.subscribed == 0}">
+                        <li class="youtube">
+                            <div class="g-ytsubscribe" data-channelid="UCpb_iJuhFe8V6rQdbNqfAlQ" data-layout="full" data-theme="dark" data-count="undefined"></div>
+                        </li>
+                    </g:if>
+                </g:else>
+                <g:if test="${!!twitter?.token == false}">
+                    <li class="twitter">
+                        <button type="button" id="authTwitter"><i class="icon-twitter"></i>Ir a Twitter</button>
+                    </li>
+                </g:if>
+                <g:else>
+                    <g:if test="${twitter?.follows == 0}">
                         <li class="twitter">
-                            <button type="button" id="authTwitter"><i class="icon-twitter"></i>Ir a Twitter</button> <span class="company_text icon-twitter">Ve a Twitter, autoriza tu cuenta y sigue <strong>NickyJamPR</strong> para ser el primero en todo.</span>
+                            <a class="twitter-follow-button"  href="https://twitter.com/nickyjampr"  data-lang="es">Seguir a @NickyJamPR</a>
                         </li>
                     </g:if>
-                    <g:else>
-                        <g:if test="${twitter?.follows == 0}">
-                            <li class="twitter">
-                                <a class="twitter-follow-button"  href="https://twitter.com/nickyjampr"  data-lang="es">Seguir a @NickyJamPR</a>
+                </g:else>
 
-                                <span class="company_text icon-twitter">Sigue a <strong>@NickyJamPR</strong> en Twitter para recibir notificaciones en tiempo real de eventos y noticias.</span>
-                            </li>
-                        </g:if>
-                    </g:else>
-
-                    <g:if test="${!!instagram?.token == false}">
+                <g:if test="${!!instagram?.token == false}">
+                    <li class="instagram">
+                        <button type="button" id="authInstagram"><i class="icon-instagram"></i>Ir a Instagram</button>
+                    </li>
+                </g:if>
+                <g:else>
+                    <g:if test="${instagram?.follows == 0}">
                         <li class="instagram">
-                            <button type="button" id="authInstagram"><i class="icon-instagram"></i>Ir a Instagram</button><span class="company_text icon-instagram">Conoce de cerca la vida personal de <strong>NickyJamPR</strong> y síguelo en sus giras, eventos y presentaciones.</span>
+                            <style>.ig-b- { display: inline-block; }
+                            .ig-b- img { visibility: hidden; }
+                            .ig-b-:hover { background-position: 0 -60px; } .ig-b-:active { background-position: 0 -120px; }
+                            .ig-b-48 { width: 48px; height: 48px; background: url(//badges.instagram.com/static/images/ig-badge-sprite-48.png) no-repeat 0 0; }
+                            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+                                .ig-b-48 { background-image: url(//badges.instagram.com/static/images/ig-badge-sprite-48@2x.png); background-size: 60px 178px; } }</style>
+                            <a href="http://instagram.com/nickyjampr?ref=badge" class="ig-b- ig-b-48"><img src="//badges.instagram.com/static/images/ig-badge-48.png" alt="Instagram" /></a>
+
                         </li>
                     </g:if>
-                    <g:else>
-                        <g:if test="${instagram?.follows == 0}">
-                            <li class="instagram">
-                                <style>.ig-b- { display: inline-block; }
-                                .ig-b- img { visibility: hidden; }
-                                .ig-b-:hover { background-position: 0 -60px; } .ig-b-:active { background-position: 0 -120px; }
-                                .ig-b-48 { width: 48px; height: 48px; background: url(//badges.instagram.com/static/images/ig-badge-sprite-48.png) no-repeat 0 0; }
-                                @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-                                    .ig-b-48 { background-image: url(//badges.instagram.com/static/images/ig-badge-sprite-48@2x.png); background-size: 60px 178px; } }</style>
-                                <a href="http://instagram.com/nickyjampr?ref=badge" class="ig-b- ig-b-48"><img src="//badges.instagram.com/static/images/ig-badge-48.png" alt="Instagram" /></a>
+                </g:else>
+            </ul>
+        </div>
+    </section>
 
-                                <span class="company_text icon-instagram">Sigue a <strong>@NickyJamPR</strong> en Instagram y conoce su vida de cerca, sus presentaciones y mantente al día con sus evenos y presentaciones.</span>
-                            </li>
-                        </g:if>
-                    </g:else>
-                    </ul>
+    <g:set var="limittime" value="${java.util.Calendar.getInstance(TimeZone.getTimeZone(grailsApplication.config.app.timezone))}"/>
+    <g:set var="actualtime" value="${java.util.Calendar.getInstance(TimeZone.getTimeZone(grailsApplication.config.app.timezone)).getTime()}"/>
+    <%
+        limittime.set(2015,5,22,0,0,0)
+        if (actualtime.compareTo(limittime.getTime())<=0){
+    %>
+    <div class="timedate">
+        <span>Final de la <strong>2° Ronda</strong></span>
+        <div class="wrapper" >
+            <div class="cell">
+                <div id="holder">
+                    <div class="digits"></div>
                 </div>
-            </section>
+            </div>
+        </div>
+    </div>
+    <section>
 
-            <div class="timedate">
-                <span>Final de la <strong>1° Ronda</strong></span>
-                <div class="wrapper" >
-                    <div class="cell">
-                        <div id="holder">
-                            <div class="digits"></div>
+    <div id="tab-container" class="tab-container">
+    <ul class="tabs">
+        <li class="tab"><a href="#ronda-1">1° Ronda <span>(TERMINADA)</span></a></li>
+        <li class="tab" id="the-second-round"><a href="#ronda-2">2° Ronda <span>(<g:formatDate date="${fechas2?.startDate}" type="date" style="SHORT" locale="es_CO"/>)</span></a></li>
+        <li class="tab"><a href="#ronda-3">3° Ronda <span>(PRONTO)</span></a></li>
+        <li class="tab"><a href="#final">Final <span>(PRONTO)</span></a></li>
+    </ul>
+    <div id="ronda-1" class="cont-tab">
+
+
+
+    <section>
+    <div class="home_description">
+    <h2>La Primera Ronda ha terminado, estos son los resultados oficiales:</h2>
+
+    <h2 class="subtitle">Haz Clic en ronda 2 para votar por tus nevos favoritos.</h2>
+
+    <h1 class="title_battle">BATALLA 1</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> rmsrap - <span>Canción:</span> #IMPROJAM @Rms RAP Venezuela
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>10.859
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/9tTXz1UQ5EM/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> dantedamageklan - <span>Canción:</span> #IMPROJAM Nicky Jam (FreeStyle) - Dante Damageklan
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>7.824
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/k4a1wgU-YrI/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>18.683
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 2</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> mckilleroficial - <span>Canción:</span> #IMPROJAM NickyJam (FreeStyle) - Mc Killer
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>7.571
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/9xBOm_mqx8o/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> parapetoelcaballo - <span>Canción:</span> El Way Parapeto - #ImproJam (Medellin - Colombia)
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>7.409
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/cDsf6irTXJM/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>14.980
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 3</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> elprofetard - <span>Canción:</span> El ProfetaRD #IMPROJAM En Busca De Los 10,000 USD
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>2.784
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/Whgk1kFj_Tg/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> skoneoficial - <span>Canción:</span> SKONE - #IMPROJAM
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>4.548
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/3aPI0-u6Gr4/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>7.332
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 4</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> elputasmc - <span>Canción:</span> SANTUPLEX EL FENIX - ¨EL PUTAS¨- #IMPROJAM Quibdó Chocó Colombia
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>8.602
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/pBUhu-nRWjM/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> mcflakooficial - <span>Canción:</span> MC FLAKO - #‎IMPROJAM‬
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>10.619
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/Zaw7dU53Im4/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>19.221
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 5</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> Dominic Perez - <span>Canción:</span> #IMPROJAM Dominic Perez | Nicky Jam
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>2.238
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/Z88pM0hlHPM/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> Centinela - <span>Canción:</span> Centinela - #IMPROJAM
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>4.680
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/VPANgHVXoB4/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>6.918
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 6</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> dulzhelaurahd - <span>Canción:</span> #IMPROJAM NickyJam (FreeStyle) ( ESPAÑA ) - Dulzhe Laura
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>3.160
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/l3PR0IEzaUo/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> theodlanier - <span>Canción:</span> #IMPROJAM Odlanier  (CARACAS-VENEZUELA) SESION DE FREESTYLE
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>4.781
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/oj9QIV4T4Mc/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>7.941
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 7</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> jrstylooriginal - <span>Canción:</span> #IMPROJAM NICKY JAM  (EUROPA) - JR Stylo Original (COLOMBIA)
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>3.102
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/ht7F9bjXSEk/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> thepromocionmusical - <span>Canción:</span> #IMPROJAM Marchena Del 2 (Caracas - Venezuela) FREESTYLE
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>2.936
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/5aopP_uSMmk/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>6.038
+            </span>
+        </div>
+    </section>
+
+
+    <h1 class="title_battle">BATALLA 8</h1>
+    <section id="battles_finish">
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> dario720 - <span>Canción:</span> DARCO MC #IMPROJAM-SANTANDER/COLOMBIA Freestyle 2014
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>2.175
+            </span>
+
+            <div class="loser"><img src="http://i3.ytimg.com/vi/OonbPuczXmg/0.jpg"></div>
+        </article>
+
+        <h2 class="vs">VS</h2>
+        <article class="battle_conclucion">
+            <div class="credits_users">
+                <span>Artista:</span> jpmsoy - <span>Canción:</span> Jpm Soy - #IMPROJAM
+            </div>
+            <span class="votos_users">
+                Votos Totales:  <i class="icon-heart5"></i>6.717
+            </span>
+            <h5>¡GANADOR!</h5>
+
+            <div><img src="http://i3.ytimg.com/vi/70rFZQq4YNI/0.jpg"></div>
+        </article>
+
+        <div class="more_votos">
+            <span>
+                <h3>SUMA DE VOTOS</h3><i class="icon-heart5"></i>8.892
+            </span>
+        </div>
+    </section>
+    </div>
+    </section>
+
+    </div>
+    <div id="ronda-2" class="cont-tab">
+        <g:if test="${showVideos}">
+            <g:each in="${videos}" var="fixture" status="j">
+                <article>
+                    <div class="competitor">
+                        <span data-video-id="${fixture?.video1?.video?._id}" data-fixture-id="${fixture?.fixtureid}" class="vote_competitor">
+                            <i class="icon-heart5"></i><g:formatNumber number="${fixture?.video1.votes}" type="number" locale="es_CO" />
+                        </span>
+                        <span class="play_competitor video_open" href="#inline_content" data-video-id="${fixture?.video1?.id}" data-video-title="${fixture?.video1?.video?.title}" data-video-artist="${fixture?.video1?.video?.uploader}">
+                            <i class="icon-play3"></i> PLAY
+                        </span>
+                        <img src="http://img.youtube.com/vi/${fixture?.video1?.id}/0.jpg"/>
+                        <div class="my_vote icon-heart5">
+                            <span id="after_vote_${fixture?.video1?.video?._id}"><g:formatNumber number="${fixture?.video1.votes}" type="number" locale="es_CO" /></span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <section>
-                <div id="tab-container" class="tab-container">
-                    <ul class="tabs">
-                        <li class="tab"><a href="#ronda-1">1° Ronda <span>(<g:formatDate date="${fechas1?.startDate}" type="date" style="SHORT" locale="es_CO"/>)</span></a></li>
-                        <li class="tab"><a href="#ronda-2">2° Ronda <span>(PRONTO)</span></a></li>
-                        <li class="tab"><a href="#ronda-3">3° Ronda <span>(PRONTO)</span></a></li>
-                        <li class="tab"><a href="#final">Final <span>(PRONTO)</span></a></li>
-                    </ul>
-                    <div id="ronda-1" class="cont-tab">
+                    <span class="versus">VS</span>
+                    <div class="competitor">
+                        <span data-video-id="${fixture?.video2?.video?._id}" data-fixture-id="${fixture?.fixtureid}" class="vote_competitor">
+                            <i class="icon-heart5"></i> <g:formatNumber number="${fixture?.video2.votes}" type="number" locale="es_CO"/>
+                        </span>
+                        <span class="play_competitor video_open" href="#inline_content" data-video-id="${fixture?.video2?.id}" data-video-title="${fixture?.video2?.video?.title}" data-video-artist="${fixture?.video2?.video?.uploader}">
+                            <i class="icon-play3"></i> PLAY
+                        </span>
+                        <img src="http://img.youtube.com/vi/${fixture?.video2?.id}/0.jpg"/>
+                        <div class="my_vote icon-heart5">
+                            <span id="after_vote_${fixture?.video2?.video?._id}"><g:formatNumber number="${fixture?.video2.votes}" type="number" locale="es_CO"/></span>
+                        </div>
+                    </div>
+                    <div class="data_battle">
+                        <div class="data_battle_1">
+                            <span>Artista:</span> ${fixture?.video1.video?.uploader} - <span>Canción:</span> ${fixture?.video1.video?.title}
+                        </div>
+                        <span id="allvote_${fixture?.fixtureid}" class="vote_all">
+                            <i class="icon-heart5"></i><g:formatNumber number="${fixture?.video1.votes + fixture?.video2.votes}" type="number" locale="es_CO" />
+                        </span>
+                        <div class="data_battle_2">
+                            <span>Artista:</span> ${fixture?.video2.video?.uploader} - <span>Canción:</span> ${fixture?.video2.video?.title}
+                        </div>
+                    </div>
+                </article>
 
-                        <g:each in="${videos}" var="fixture" status="j">
-                            <article>
-                                <div class="competitor">
-                                    <span data-video-id="${fixture?.video1?.video?._id}" data-fixture-id="${fixture?.fixtureid}" class="vote_competitor">
-                                        <i class="icon-heart5"></i><g:formatNumber number="${fixture?.video1.votes}" type="number" locale="es_CO" />
-                                    </span>
-                                    <span class="play_competitor video_open" href="#inline_content" data-video-id="${fixture?.video1?.id}" data-video-title="${fixture?.video1?.video?.title}" data-video-artist="${fixture?.video1?.video?.uploader}">
-                                        <i class="icon-play3"></i> PLAY
-                                    </span>
-                                    <img src="http://img.youtube.com/vi/${fixture?.video1?.id}/0.jpg"/>
-                                    <div class="my_vote icon-heart5">
-                                        <span id="after_vote_${fixture?.video1?.video?._id}"><g:formatNumber number="${fixture?.video1.votes}" type="number" locale="es_CO" /></span>
-                                    </div>
-                                </div>
-                                <span class="versus">VS</span>
-                                <div class="competitor">
-                                    <span data-video-id="${fixture?.video2?.video?._id}" data-fixture-id="${fixture?.fixtureid}" class="vote_competitor">
-                                        <i class="icon-heart5"></i> <g:formatNumber number="${fixture?.video2.votes}" type="number" locale="es_CO"/>
-                                    </span>
-                                    <span class="play_competitor video_open" href="#inline_content" data-video-id="${fixture?.video2?.id}" data-video-title="${fixture?.video2?.video?.title}" data-video-artist="${fixture?.video2?.video?.uploader}">
-                                        <i class="icon-play3"></i> PLAY
-                                    </span>
-                                    <img src="http://img.youtube.com/vi/${fixture?.video2?.id}/0.jpg"/>
-                                    <div class="my_vote icon-heart5">
-                                        <span id="after_vote_${fixture?.video2?.video?._id}"><g:formatNumber number="${fixture?.video2.votes}" type="number" locale="es_CO"/></span>
-                                    </div>
-                                </div>
-                                <div class="data_battle">
-                                    <div class="data_battle_1">
-                                        <span>Artista:</span> ${fixture?.video1.video?.uploader} - <span>Canción:</span> ${fixture?.video1.video?.title}
-                                    </div>
-                                    <span id="allvote_${fixture?.fixtureid}" class="vote_all">
-                                        <i class="icon-heart5"></i><g:formatNumber number="${fixture?.video1.votes + fixture?.video2.votes}" type="number" locale="es_CO" />
-                                    </span>
-                                    <div class="data_battle_2">
-                                        <span>Artista:</span> ${fixture?.video2.video?.uploader} - <span>Canción:</span> ${fixture?.video2.video?.title}
-                                    </div>
-                                </div>
-                            </article>
+            </g:each>
+        </g:if>
+        <g:else>
+            <article>
+                <asset:image src="soon.jpg"/>
+            </article>
+        </g:else>
 
-                        </g:each>
-                    </div>
-                    <div id="ronda-2" class="cont-tab">
-                    </div>
-                    <div id="ronda-3" class="cont-tab">
-                    </div>
-                    <div id="final" class="cont-tab">
-                    </div>
-                </div>
-            </section>
-            <div class="timedate">
-                <span><h4> Loggeado como [ ${currentUser?.name} ] -- <g:remoteLink class="logout" controller="logout" method="post" asynchronous="false" onSuccess="location.reload()">Logout</g:remoteLink></h4></span>
-            </div>
-            <footer>
+    </div>
 
-            </footer>
-        </sec:ifAnyGranted>
+    <div id="ronda-3" class="cont-tab">
+    </div>
+    <div id="final" class="cont-tab">
+    </div>
+    </div>
+
+    </section>
+    <%
+        }else{
+    %>
+    <section>
+        <h1 style="color: white;
+        float: left;
+        text-align: center;
+        border-bottom: 1px solid;
+        border-top: 1px solid;
+        padding: 25px 0;
+        text-transform: uppercase;
+        ">La primera fase ha terminado, los ganadores están grabando sus nuevas improvisaciones. Espera muy pronto las nuevas batallas</h1>
+    </section>
+
+    <%
+        }
+    %>
+    <div class="timedate">
+        <span><h4> Loggeado como [ ${currentUser?.name} ] -- <g:remoteLink class="logout" controller="logout" method="post" asynchronous="false" onSuccess="location.reload()">Logout</g:remoteLink></h4></span>
+    </div>
+    <footer>
+
+    </footer>
+    </sec:ifAnyGranted>
+    </g:if>
+    <g:else>
+        <section>
+            <article id="soon_image">
+                <asset:image src="soon.jpg"/>
+            </article>
+        </section>
+    </g:else>
+
+
+
 
         <div style='display:none'>
             <div id='inline_content'>
@@ -262,7 +587,7 @@
                 <iframe  id="videoframe" width="100%" height="580" src="//www.youtube.com/embed/OxxggwHFj7M" frameborder="0" allowfullscreen></iframe>
                 <div class="colorbox_bottom">
                     <span>Artista:</span> <span id="textoartista"></span> - <span>Canción:</span> <span id="textocancion"></span>
-                    <span class="vote_competitor">
+                    <span class="vote_competitor" style="display: none">
                         <i class="icon-heart5"></i> 1.235
                     </span>
                 </div>
@@ -301,7 +626,7 @@
         $body = $("body");
         var $element
         var userFingerprint = new Fingerprint({screen_resolution: true,canvas: true,ie_activex: true});
-        var enddate = '${formatDate(type: "date", locale: "es_CO" , style: "SHORT" ,date: fechas1.endDate)}';
+        var enddate = '${formatDate(type: "date", locale: "es_CO" , style: "SHORT" ,date: fechas2.endDate)}';
         var sepdate = enddate.split('/');
         $(document).ready(function(){
 
@@ -418,7 +743,7 @@
 //            $body.addClass("loading");
             var data = {};
             data["videoid"] = $element.data("video-id");
-            data["round"] = 1;
+            data["round"] = 2;
             data["ipaddr"] = ip != 0 ? ip : '0.0.0.0';
             data["fingerprint"] = userFingerprint.get();
             data["reportDate"] = "Fecha de inicio de la ronda";
@@ -479,14 +804,14 @@
                                 }else{
 //                                    alert("no")
                                     $(".facebook").show();
-                                    likesFB = false;
+                                    likesFB = true;
                                     if(typeof f === "function")
                                         f(false)
                                 }
                             }else{
 //                                alert("no")
                                 $(".facebook").show();
-                                likesFB = false;
+                                likesFB = true;
                                 if(typeof f === "function")
                                     f(false)
                             }

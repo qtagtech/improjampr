@@ -8,9 +8,6 @@ import org.springframework.web.context.request.RequestContextHolder
 
 class FacebookAuthService {
 
-
-
-
     FacebookUser create(FacebookAuthToken token) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
         def fbPrUser = FacebookUser.findByUid(token.uid)
@@ -72,8 +69,8 @@ class FacebookAuthService {
         }
         FacebookUser fbUser = new FacebookUser(
                     uid: token.uid,
-                    accessToken: token.accessToken?.accessToken,
-                    accessTokenExpires: token.accessToken?.expireAt,
+                    accessToken: token.accessToken.accessToken,
+                    accessTokenExpires: token.accessToken.expireAt,
                     user: newUser
         )
         fbUser.save()

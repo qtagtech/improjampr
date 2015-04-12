@@ -21,10 +21,11 @@ environments {
             url = "jdbc:postgresql://"+host+":"+port+"/"+System.env.OPENSHIFT_APP_NAME
             username = System.env.OPENSHIFT_POSTGRESQL_DB_USERNAME
             password = System.env.OPENSHIFT_POSTGRESQL_DB_PASSWORD
-            /*dbCreate = "update"
+/*
+            dbCreate = "update"
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgreSQLDialect"
-            url = "jdbc:postgresql://localhost:5432/improJam"
+            url = "jdbc:postgresql://localhost:5432/improjam"
             username = "postgres"
             password = "qtagtech"*/
         }
@@ -32,10 +33,11 @@ environments {
 
             grails {
                 mongo {
-                    host = "ds061170-a0.mongolab.com"
-                    port = 61170
+                    //mongodb://<user>:<password>@c1088.candidate.18.mongolayer.com:11088,c1049.candidate.20.mongolayer.com:11049/improjam?replicaSet=set-5525c0b4390d2196d9000123
+                    host = "c1088.candidate.18.mongolayer.com"
+                    port = 11088
                     username = "improjam"
-                    password="nickyQtag"
+                    password="NickyQtag1!.."
                     databaseName = "improjam"
                     /*host = "localhost"
                     port = 27017
