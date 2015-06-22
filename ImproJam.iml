@@ -144,6 +144,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="improjam-grailsPlugins" />
+    <orderEntry type="module" module-name="ImproJam-grailsPlugins" />
   </component>
 </module>
-

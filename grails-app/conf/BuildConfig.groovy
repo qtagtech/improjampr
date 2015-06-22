@@ -99,7 +99,7 @@ grails.project.dependency.resolution = {
 
         //spring security
         compile ":spring-security-core:2.0-RC4"
-        compile "org.grails.plugins:spring-security-facebook:0.16.2"
+        compile ":spring-security-facebook:0.17"
         compile ":spring-security-ui:1.0-RC2"
 
         // Uncomment these to enable additional asset-pipeline capabilities

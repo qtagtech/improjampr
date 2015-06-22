@@ -21,8 +21,7 @@ environments {
             url = "jdbc:postgresql://"+host+":"+port+"/"+System.env.OPENSHIFT_APP_NAME
             username = System.env.OPENSHIFT_POSTGRESQL_DB_USERNAME
             password = System.env.OPENSHIFT_POSTGRESQL_DB_PASSWORD
-/*
-            dbCreate = "update"
+            /*dbCreate = "update"
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgreSQLDialect"
             url = "jdbc:postgresql://localhost:5432/improjam"

@@ -160,7 +160,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 
 grails.plugin.springsecurity.facebook.domain.classname='com.improjam.FacebookUser'
+//grails.plugin.springsecurity.facebook.appId='1105493246134196'
 grails.plugin.springsecurity.facebook.appId='1008044385879083'
+//grails.plugin.springsecurity.facebook.secret='e23d895c7b291cbbbeb6ca13171cceab'
 grails.plugin.springsecurity.facebook.secret='a4e45e862d176d6be744cbf6198526a6'
 grails.plugin.springsecurity.facebook.permissions = 'email,user_likes'
 com.improjam.url = 'http://www.improjampr.com'
